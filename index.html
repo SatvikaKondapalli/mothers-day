@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>For Amma — Happy Mother's Day</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Noto+Sans+Telugu:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blush: #f2c4ce;
+    --rose: #c9748a;
+    --deep-rose: #8b3a52;
+    --ivory: #fdf6f0;
+    --warm-white: #fffaf7;
+    --gold: #c9a96e;
+    --text-dark: #2c1a22;
+    --text-mid: #6b3f52;
+    --text-light: #a8758a;
+    --nav-h: 56px;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--warm-white);
+    color: var(--text-dark);
+    overflow: hidden;
+    height: 100%;
+  }
+
+  /* ══ NAV ══ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    height: var(--nav-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 1rem;
+    background: rgba(253,246,240,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(201,116,138,0.15);
+  }
+  .nav-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-weight: 300; font-style: italic;
+    color: var(--deep-rose); white-space: nowrap; flex-shrink: 0;
+    margin-right: 0.5rem;
+  }
+  .nav-links {
+    display: flex; gap: 2px; overflow-x: auto;
+    -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    background: none; border: none; cursor: pointer;
+    font-family: 'Jost', sans-serif; font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--text-mid); padding: 0.36rem 0.65rem;
+    border-radius: 20px; transition: all 0.22s ease;
+    white-space: nowrap; flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav-btn:hover { background: rgba(201,116,138,0.12); color: var(--deep-rose); }
+  .nav-btn.active { background: var(--deep-rose); color: white; }
+
+  /* ══ PAGES ══ */
+  .page {
+    position: fixed; inset: 0;
+    padding-top: var(--nav-h);
+    overflow-y: auto; -webkit-overflow-scrolling: touch;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.45s ease;
+  }
+  .page.active { opacity: 1; pointer-events: all; }
+
+  /* ══ PETALS ══ */
+  #petal-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+
+  /* shared header */
+  .page-header { text-align: center; padding: 2.2rem 1.25rem 1.8rem; }
+  .page-eyebrow {
+    font-size: 0.67rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.65rem;
+  }
+  .page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 6vw, 3rem); font-weight: 300;
+    color: var(--deep-rose); line-height: 1.15; margin-bottom: 0.65rem;
+  }
+  .page-title em { font-style: italic; }
+  .page-rule { width: 40px; height: 1px; background: var(--gold); margin: 0 auto; }
+
+  /* ══ HOME ══ */
+  #page-home {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 100vh; text-align: center;
+    padding: calc(var(--nav-h) + 1.5rem) 1.5rem 3rem;
+    background: radial-gradient(ellipse at 30% 40%, #fde8ef, transparent 60%),
+                radial-gradient(ellipse at 75% 70%, #f5e0ea, transparent 50%),
+                var(--warm-white);
+    position: relative;
+  }
+  .home-eyebrow {
+    font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.1rem;
+    display: flex; align-items: center; gap: 0.55rem;
+  }
+  .home-eyebrow::before, .home-eyebrow::after {
+    content: ''; display: block; width: 28px; height: 1px; background: var(--gold);
+  }
+  .home-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 14vw, 7rem); font-weight: 300; line-height: 1;
+    color: var(--deep-rose); margin-bottom: 0.3rem;
+  }
+  .home-title em { font-style: italic; color: var(--rose); }
+  .home-sub {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(1rem, 4vw, 1.5rem); font-weight: 300;
+    color: var(--text-mid); margin-bottom: 1.8rem;
+  }
+  .home-divider { width: 48px; height: 1.5px; background: var(--gold); margin: 0 auto 1.6rem; }
+  .home-quote {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(0.95rem, 3.8vw, 1.2rem); font-weight: 300;
+    color: var(--text-light); max-width: 380px; line-height: 1.9; margin-bottom: 2.2rem;
+  }
+  .home-cta {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--deep-rose); color: white;
+    font-family: 'Jost', sans-serif; font-size: 0.77rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.78rem 1.7rem; border: none; border-radius: 40px;
+    cursor: pointer; transition: all 0.28s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .home-cta:active { transform: scale(0.96); }
+  .home-flowers { position: absolute; font-size: 3.8rem; opacity: 0.07; pointer-events: none; }
+  .flower-tl { top: 75px; left: -8px; transform: rotate(-20deg); }
+  .flower-br { bottom: 28px; right: -8px; transform: rotate(15deg); }
+
+  /* ══ LOVE ══ */
+  #page-love { background: var(--ivory); min-height: 100vh; }
+  .love-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 1rem; max-width: 860px;
+    margin: 0 auto; padding: 0 1.1rem 3rem;
+  }
+  .love-card {
+    background: white; border-radius: 18px;
+    border: 1px solid rgba(201,116,138,0.13);
+    padding: 1.5rem 1.3rem;
+    position: relative; overflow: hidden;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.45s ease, transform 0.45s ease, box-shadow 0.3s ease;
+  }
+  .love-card.visible { opacity: 1; transform: translateY(0); }
+  .love-card::before {
+    content: ''; position: absolute; top: -32px; right: -32px;
+    width: 84px; height: 84px;
+    background: radial-gradient(circle, rgba(242,196,206,0.32), transparent 70%);
+    border-radius: 50%;
+  }
+  @media (hover: hover) {
+    .love-card:hover { transform: translateY(-5px); box-shadow: 0 14px 38px rgba(139,58,82,0.1); }
+  }
+  .love-num {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 2.8rem; font-weight: 300; color: rgba(201,116,138,0.18);
+    line-height: 1; margin-bottom: 0.35rem;
+  }
+  .love-icon { font-size: 1.55rem; margin-bottom: 0.55rem; }
+  .love-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.15rem;
+    font-weight: 600; color: var(--deep-rose); margin-bottom: 0.45rem;
+  }
+  .love-body { font-size: 0.88rem; color: var(--text-mid); line-height: 1.72; font-weight: 300; }
+
+  /* ══ POEM ══ */
+  #page-letter {
+    background: linear-gradient(160deg, #fdf0f4 0%, var(--warm-white) 100%);
+    min-height: 100vh; padding: 5rem 2rem 4rem;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .letter-wrap {
+    max-width: 640px; width: 100%;
+  }
+  .poem-paper {
+    background: white;
+    border: 1px solid rgba(201,116,138,0.18);
+    border-radius: 16px;
+    padding: 3.5rem 3rem 4rem;
+    position: relative;
+    box-shadow: 0 8px 60px rgba(139,58,82,0.08);
+    text-align: center;
+    overflow: hidden;
+  }
+  .poem-paper::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 10% 10%, rgba(242,196,206,0.25) 0%, transparent 55%),
+      radial-gradient(ellipse at 90% 90%, rgba(201,116,138,0.15) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .poem-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.2rem; font-weight: 300; font-style: italic;
+    color: var(--deep-rose);
+    margin-bottom: 0.3rem; letter-spacing: 0.05em;
+  }
+  .poem-title-tel {
+    font-size: 2rem; font-family: serif;
+    color: var(--rose); font-style: normal; display: block;
+    margin-bottom: 2.2rem;
+  }
+  .poem-divider {
+    display: flex; align-items: center; gap: 0.8rem;
+    justify-content: center; margin-bottom: 2.5rem;
+  }
+  .poem-divider span { font-size: 1rem; color: var(--gold); }
+  .poem-divider::before, .poem-divider::after {
+    content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--gold);
+  }
+  .poem-stanza {
+    margin-bottom: 2rem;
+    opacity: 0; transform: translateY(14px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .poem-stanza.visible { opacity: 1; transform: translateY(0); }
+  .poem-line {
+    font-family: 'Noto Sans Telugu', serif;
+    font-size: clamp(1rem, 2.8vw, 1.22rem);
+    line-height: 2.1; color: #3a2030; font-weight: 400;
+    display: block; letter-spacing: 0.01em;
+  }
+  .poem-line strong {
+    color: var(--deep-rose); font-weight: 600;
+  }
+  .poem-final {
+    font-family: 'Noto Sans Telugu', serif;
+    font-size: clamp(1.2rem, 3.5vw, 1.55rem);
+    color: var(--deep-rose); font-weight: 600;
+    margin-top: 1rem; letter-spacing: 0.02em;
+    opacity: 0; transform: translateY(12px);
+    transition: opacity 0.7s ease 0.5s, transform 0.7s ease 0.5s;
+  }
+  .poem-final.visible { opacity: 1; transform: translateY(0); }
+  .poem-roses {
+    position: absolute; font-size: 6rem; opacity: 0.04; pointer-events: none;
+  }
+  .poem-roses.tl { top: -10px; left: -10px; transform: rotate(-20deg); }
+  .poem-roses.br { bottom: -10px; right: -10px; transform: rotate(15deg); }
+  .letter-flower-bg {
+    display: none;
+  }
+
+  /* ══ MEMORIES ══ */
+  #page-memories { background: var(--warm-white); min-height: 100vh; padding-bottom: 3rem; }
+  .timeline {
+    max-width: 580px; margin: 0 auto;
+    position: relative; padding: 0 1.1rem 1rem 2.8rem;
+  }
+  .timeline::before {
+    content: ''; position: absolute;
+    left: calc(1.1rem + 8px); top: 0; bottom: 0; width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--blush) 8%, var(--blush) 92%, transparent);
+  }
+  .timeline-item {
+    position: relative; margin-bottom: 1.8rem;
+    opacity: 0; transform: translateX(14px); transition: all 0.42s ease;
+  }
+  .timeline-item.visible { opacity: 1; transform: translateX(0); }
+  .timeline-dot {
+    position: absolute; left: -1.82rem; top: 3px;
+    width: 17px; height: 17px; border-radius: 50%;
+    background: white; border: 2px solid var(--rose);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .timeline-dot::after {
+    content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--rose);
+  }
+  .timeline-label {
+    font-size: 0.66rem; letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.28rem;
+  }
+  .timeline-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.15rem;
+    font-weight: 600; color: var(--deep-rose); margin-bottom: 0.3rem;
+  }
+  .timeline-desc { font-size: 0.87rem; color: var(--text-mid); line-height: 1.7; font-weight: 300; }
+  /* added */
+  .memory-photo {
+  width: 100%;
+  margin-top: 0.8rem;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(201,116,138,0.15);
+  box-shadow: 0 8px 25px rgba(139,58,82,0.08);
+}
+
+.memory-photo img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  max-height: 280px;
+  transition: transform 0.4s ease;
+}
+
+.memory-photo img:hover {
+  transform: scale(1.03);
+}
+/* added end */
+
+  /* ══ WISH ══ */
+  #page-wish {
+    background: radial-gradient(ellipse at 50% 30%, #fde2ea, var(--ivory) 70%);
+    min-height: 100vh;
+    padding: calc(var(--nav-h) + 2rem) 1.5rem 3rem;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+  }
+  .wish-bloom { font-size: 3.2rem; margin-bottom: 1.1rem; animation: pulse 3s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
+  .wish-title {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(1.8rem, 8vw, 3.8rem); font-weight: 300;
+    color: var(--deep-rose); line-height: 1.2; margin-bottom: 1rem;
+  }
+  .wish-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(0.92rem, 3.2vw, 1.08rem); font-style: italic;
+    color: var(--text-light); margin-bottom: 2.2rem;
+    line-height: 1.8; max-width: 360px;
+  }
+  .wish-badges {
+    display: flex; flex-wrap: wrap; gap: 0.45rem;
+    justify-content: center; max-width: 420px; margin-bottom: 2.2rem;
+  }
+  .badge {
+    background: white; border: 1px solid rgba(201,116,138,0.2);
+    border-radius: 26px; padding: 0.38rem 0.9rem;
+    font-size: 0.78rem; color: var(--text-mid); font-weight: 300;
+  }
+  .wish-final {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(1.15rem, 4vw, 1.45rem); color: var(--rose);
+  }
+</style>
+</head>
+<body>
+
+<canvas id="petal-canvas"></canvas>
+
+<nav>
+  <div class="nav-brand">For Amma ✦</div>
+  <div class="nav-links">
+    <button class="nav-btn active"  onclick="go('home',this)">Home</button>
+    <button class="nav-btn"         onclick="go('love',this)">Love</button>
+    <button class="nav-btn"         onclick="go('letter',this)">Poem</button>
+    <button class="nav-btn"         onclick="go('memories',this)">Memories</button>
+    <button class="nav-btn"         onclick="go('wish',this)">Wish</button>
+  </div>
+</nav>
+
+<!-- ══ HOME ══ -->
+<div id="page-home" class="page active">
+  <span class="home-flowers flower-tl">🌸</span>
+  <span class="home-flowers flower-br">🌺</span>
+  <div class="home-eyebrow">Mother's Day 2026</div>
+  <h1 class="home-title">Dear <em>Lakshmi</em></h1>
+  <p class="home-sub">My mother. My strength. My everything.</p>
+  <div class="home-divider"></div>
+  <p class="home-quote">
+    "Some people come into your life like sunlight —
+    warming every corner, making everything grow.
+    You are that person for me."
+  </p>
+  <button class="home-cta" onclick="go('love', document.querySelectorAll('.nav-btn')[1])">
+    Explore this gift &nbsp;→
+  </button>
+</div>
+
+<!-- ══ LOVE ══ -->
+<div id="page-love" class="page">
+  <div class="page-header">
+    <p class="page-eyebrow">From the heart</p>
+    <h2 class="page-title">Why I love <em>you</em></h2>
+    <div class="page-rule"></div>
+  </div>
+  <div class="love-grid">
+    <div class="love-card">
+      <div class="love-num">01</div>
+      <div class="love-icon">🌹</div>
+      <div class="love-title">You are so beautiful</div>
+      <div class="love-body">Not just on the outside — you have a warmth about you that makes everyone feel good. You light up any room you walk into, without even trying.</div>
+    </div>
+    <div class="love-card">
+      <div class="love-num">02</div>
+      <div class="love-icon">🤲</div>
+      <div class="love-title">You always take care of me</div>
+      <div class="love-body">Every meal, every late night, every time I was sick or sad — you were right there. I never had to ask. You just knew, and you showed up every single time.</div>
+    </div>
+    <div class="love-card">
+      <div class="love-num">03</div>
+      <div class="love-icon">🌟</div>
+      <div class="love-title">You always support me</div>
+      <div class="love-body">Even when I wasn't sure of myself, you believed in me. You cheered me on through everything — good days and bad. That means more than you know.</div>
+    </div>
+    <div class="love-card">
+      <div class="love-num">04</div>
+      <div class="love-icon">💛</div>
+      <div class="love-title">Your love has no limits</div>
+      <div class="love-body">You love without keeping score. No matter what, your love is always there — steady, big, and real. I feel it every single day, even in the smallest things.</div>
+    </div>
+    <div class="love-card">
+      <div class="love-num">05</div>
+      <div class="love-icon">🕊️</div>
+      <div class="love-title">You make hard things easier</div>
+      <div class="love-body">Whenever life felt heavy, just being near you made it lighter. Your calm, your smile, your presence — it always made me feel like things would be okay.</div>
+    </div>
+    <div class="love-card">
+      <div class="love-num">06</div>
+      <div class="love-icon">✨</div>
+      <div class="love-title">You taught me how to love</div>
+      <div class="love-body">Watching you — how you care, how you give, how you stay patient — taught me everything. I learned what love really looks like just by having you as my Amma.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ POEM ══ -->
+<div id="page-letter" class="page">
+  <div class="page-header letter-wrap" style="padding-bottom:1.4rem;">
+    <p class="page-eyebrow">మనసు మాట</p>
+    <h2 class="page-title">A poem <em>for you</em></h2>
+    <div class="page-rule"></div>
+  </div>
+  <div class="letter-wrap">
+    <div class="poem-paper">
+      <div class="poem-roses tl">🌸</div>
+      <div class="poem-roses br">🌺</div>
+      <span class="poem-title-tel">అమ్మ</span>
+      <div class="poem-divider"><span style="color:var(--gold)">🌸</span></div>
+      <div class="poem-stanza" id="ps1">
+        <span class="poem-line">నీ <strong>అందం</strong> అమోఘం,&nbsp; ప్రేమ <strong>అనంతం,</strong></span>
+        <span class="poem-line">నవ్వు <strong>అమృతం,</strong>&nbsp; మాట <strong>అద్భుతం.</strong></span>
+      </div>
+      <div class="poem-stanza" id="ps2">
+        <span class="poem-line">ఓర్పు <strong>అమితం,</strong>&nbsp; ఓదార్పు <strong>అద్వితీయం,</strong></span>
+        <span class="poem-line">అనురాగం <strong>అనుపమం,</strong>&nbsp; మమత <strong>అత్యధికం.</strong></span>
+      </div>
+      <div class="poem-divider" style="margin-top:1.1rem;"><span>❤️</span></div>
+      <div class="poem-final" id="ps3">నువ్వే నా ప్రాణం.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MEMORIES ══ -->
+<div id="page-memories" class="page">
+  <div class="page-header">
+    <p class="page-eyebrow">Our story</p>
+    <h2 class="page-title"><em>Moments</em> I treasure</h2>
+    <div class="page-rule"></div>
+  </div>
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-label">The beginning</div>
+      <div class="timeline-title">The day I was born</div>
+      <div class="timeline-desc">You held me and everything changed. From that first day, everything you did was for me. I didn't know it then — but I know it now.</div>
+      <div class="memory-photo">
+        <img src="photos/photo1.jpg" alt="Memory photo">
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-label">Childhood</div>
+      <div class="timeline-title">Your food & Sunday mornings</div>
+      <div class="timeline-desc">Your cooking is home to me. Every dish felt like a hug. Those slow, lazy mornings together are some of my favourite memories.</div>
+      <div class="memory-photo">
+        <img src="photos/photo2.jpg" alt="Memory photo">
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-label">Growing up</div>
+      <div class="timeline-title">You were always there</div>
+      <div class="timeline-desc">School days, bad days, small wins — you were there for all of it. I never had to face anything alone because you were always by my side.</div>
+      <div class="memory-photo">
+        <img src="photos/photo3.jpg" alt="Memory photo">
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-label">Tough times</div>
+      <div class="timeline-title">You held us all together</div>
+      <div class="timeline-desc">When things got hard, you stayed strong — quietly, without making a big deal of it. I saw everything. I admire you so much for it.</div>
+      <div class="memory-photo">
+        <img src="photos/photo4.jpg" alt="Memory photo">
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-label">Today</div>
+      <div class="timeline-title">So grateful to be yours</div>
+      <div class="timeline-desc">Of everything in my life, being your child is what I'm most thankful for. Happy Mother's Day, Amma. I love you so much. 🌸</div>
+      <div class="memory-photo">
+        <img src="photos/photo5.jpg" alt="Memory photo">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ WISH ══ -->
+<div id="page-wish" class="page">
+  <div class="wish-bloom">🌸</div>
+  <h2 class="wish-title">Happy Mother's Day,<br><em>Lakshmi</em></h2>
+  <p class="wish-sub">May today give you all the joy and rest you so lovingly give to everyone else — back to you, tenfold.</p>
+  <div class="wish-badges">
+    <span class="badge">🌺 Health & happiness</span>
+    <span class="badge">✨ A day just for you</span>
+    <span class="badge">💛 Lots of laughter</span>
+    <span class="badge">🌿 Peace always</span>
+    <span class="badge">🕊️ Every dream come true</span>
+    <span class="badge">🌙 Restful nights</span>
+  </div>
+  <div class="wish-final">I love you more than words, Amma. ❤️</div>
+</div>
+
+<script>
+  /* ── NAVIGATION ── */
+  function go(id, btn) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    const page = document.getElementById('page-' + id);
+    page.classList.add('active');
+    if (btn) btn.classList.add('active');
+    page.scrollTop = 0;
+    if (id === 'love')     setTimeout(animateCards, 150);
+    if (id === 'letter')   setTimeout(animatePoem, 150);
+    if (id === 'memories') setTimeout(animateTimeline, 150);
+  }
+
+  function animateCards() {
+    document.querySelectorAll('.love-card').forEach((c, i) =>
+      setTimeout(() => c.classList.add('visible'), i * 90));
+  }
+  function animatePoem() {
+    ['ps1','ps2','ps3'].forEach((id, i) =>
+      setTimeout(() => document.getElementById(id)?.classList.add('visible'), i * 380));
+  }
+  function animateTimeline() {
+    document.querySelectorAll('.timeline-item').forEach((el, i) =>
+      setTimeout(() => el.classList.add('visible'), i * 160));
+  }
+
+
+
+  /* ── PETALS ── */
+  const canvas = document.getElementById('petal-canvas');
+  const ctx = canvas.getContext('2d');
+  let petals = [];
+  function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
+  resize(); window.addEventListener('resize', resize);
+  function newPetal() {
+    return {
+      x: Math.random() * canvas.width, y: -18,
+      size: Math.random() * 6 + 3,
+      vy: Math.random() * 1.1 + 0.35,
+      vx: Math.random() * 0.6 - 0.3,
+      rot: Math.random() * Math.PI * 2,
+      rs: (Math.random() - 0.5) * 0.025,
+      opacity: Math.random() * 0.32 + 0.1,
+      hue: Math.random() > 0.5 ? '#f2c4ce' : '#e8a0b4'
+    };
+  }
+  function drawPetal(p) {
+    ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+    ctx.globalAlpha = p.opacity; ctx.fillStyle = p.hue;
+    ctx.beginPath(); ctx.ellipse(0, 0, p.size, p.size * 0.52, 0, 0, Math.PI * 2);
+    ctx.fill(); ctx.restore();
+  }
+  function loop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (petals.length < 20 && Math.random() < 0.055) petals.push(newPetal());
+    petals.forEach(p => {
+      p.y += p.vy; p.x += p.vx + Math.sin(p.y * 0.018) * 0.26;
+      p.rot += p.rs; drawPetal(p);
+    });
+    petals = petals.filter(p => p.y < canvas.height + 25);
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>
